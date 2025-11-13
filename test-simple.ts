@@ -1,10 +1,12 @@
 import Uppy from '@uppy/core'
 import Dashboard from '@uppy/dashboard'
-import type {Meta , Body } from '@uppy/core'
+import type { Meta, Body } from '@uppy/core'
+
 const uppy = new Uppy<Meta, Body>()
 uppy.use(Dashboard)
 
-const dashboard = uppy.getPlugin<Dashboard<Meta, Body>>('Dashboard')?.openModal()
+const variableName: string = 'Dashboard'
+const dashboard = uppy.getPlugin('Dashboard')?.openModal()
 // Hover over dashboard to see its type
 
 
