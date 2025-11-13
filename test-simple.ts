@@ -1,16 +1,19 @@
 import Uppy from '@uppy/core'
 import Dashboard from '@uppy/dashboard'
-import type { Meta, Body } from '@uppy/core'
 
-const uppy = new Uppy<Meta, Body>()
+const uppy = new Uppy()
 uppy.use(Dashboard)
 
-const variableName: string = 'Dashboard'
-const dashboard = uppy.getPlugin('Dashboard')?.openModal()
-// Hover over dashboard to see its type
+// Case 1: literal string → typed as Dashboard<Meta, Body> | undefined
+const literalDashboard = uppy.getPlugin('Dashboard')
 
+// openModal exists and ts doesn't complain
+literalDashboard?.openModal()
 
-/**
- *
- * (method) Uppy<Meta, Body>.getPlugin<Dashboard<Meta, Body>>(id: string): Dashboard<Meta, Body> | undefined (+1 overload)
- */
+// Case 2: dynamic string → fallback overload, typed as UnknownPlugin<Meta, Body> | undefined
+const pluginName: string = 'Dashboard'
+const dynamicDashboard = uppy.getPlugin(pluginName)
+
+// openModal does not exists , since the type is UnknownPlugin and ts complains
+dynamicDashboard?.openModal()
+// hover dynamicDashboard – TypeScript no longer knows it’s the Dashboard plugin
